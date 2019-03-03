@@ -28,5 +28,6 @@ Run program via:
 If this software is useful for your work, please include the following reference in your publication or redistribution:
 
 Breuer et al. (2014) Quantitative analyses of the plant cytoskeleton reveal underlying organizational principles. J. R. Soc. Interface, 11(97): 20140362.
+
 Breuer and Nikoloski (2014) img2net: Automated network-based analysis of imaged phenotypes. Bioinformatics, 30(22): 3291-3292.
 
