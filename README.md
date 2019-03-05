@@ -1,6 +1,6 @@
 # img2net
 
-**Automated network-based analysis of imaged phenotypes**
+## Automated network-based analysis of imaged phenotypes
 
 ![](data/figure.png)
 
@@ -12,7 +12,7 @@
 
 Please see [project website for details](http://mathbiol.mpimp-golm.mpg.de/img2net/).
 
-**Instructions**
+## Instructions
 
 Install package via:
 
@@ -23,9 +23,9 @@ Run program via:
 - run_img2net.py OR
 - cd bin && python2 run_img2net.py
 
-**Citation**
+## Citation
 
-If this software is useful for your work, please include the following reference in your publication or redistribution:
+If this software is useful for your work, please include the following references in your publication or redistribution:
 
 Breuer et al. (2014) [Quantitative analyses of the plant cytoskeleton reveal underlying organizational principles](https://royalsocietypublishing.org/doi/pdf/10.1098/rsif.2014.0362). J. R. Soc. Interface, 11(97): 20140362.
 
