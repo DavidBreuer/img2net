@@ -10,5 +10,5 @@ setup(name='img2net',
       scripts=[
           'bin/run_img2net.py',
       ],
-      python_requires='>=2',
+      python_requires='~=2',
 )
