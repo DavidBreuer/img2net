@@ -11,7 +11,7 @@ import img2net.calc
 
 ##################################################################### gui
 
-class img2net:
+class img2net_class:
 
     def __init__(self):
         self.builder = gtk.Builder()
@@ -75,9 +75,6 @@ if __name__ == '__main__':
 
     multiprocessing.freeze_support()
 
-    app = img2net()
+    app = img2net_class()
 
     gtk.main()
-
-
-
