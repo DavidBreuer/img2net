@@ -27,7 +27,7 @@ Run program via:
 
 If this software is useful for your work, please include the following reference in your publication or redistribution:
 
-Breuer et al. (2014) Quantitative analyses of the plant cytoskeleton reveal underlying organizational principles. J. R. Soc. Interface, 11(97): 20140362.
+Breuer et al. (2014) [Quantitative analyses of the plant cytoskeleton reveal underlying organizational principles](https://royalsocietypublishing.org/doi/pdf/10.1098/rsif.2014.0362). J. R. Soc. Interface, 11(97): 20140362.
 
-Breuer and Nikoloski (2014) img2net: Automated network-based analysis of imaged phenotypes. Bioinformatics, 30(22): 3291-3292.
+Breuer and Nikoloski (2014) [img2net: Automated network-based analysis of imaged phenotypes](https://academic.oup.com/bioinformatics/article-pdf/30/22/3291/7249977/btu503.pdf). Bioinformatics, 30(22): 3291-3292.
 
