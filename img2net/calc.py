@@ -133,7 +133,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
 
             ################################################################# grid
 
-            print 't',t+1,T,'e',e+1,E[t],'grid'
+            print('t',t+1,T,'e',e+1,E[t],'grid')
 
             s=1.0
             S=I[t][e]*(2.0+R)+2
@@ -156,7 +156,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
 
             ################################################################# graph
 
-            print 't',t+1,T,'e',e+1,E[t],'graph'
+            print('t',t+1,T,'e',e+1,E[t],'graph')
 
             self.builder.get_object('progressbar2').set_text('constructing graphs')
 
@@ -180,7 +180,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
 
             ################################################################# observed network properties
 
-            print 't',t+1,T,'e',e+1,E[t],'obs network'
+            print('t',t+1,T,'e',e+1,E[t],'obs network')
 
             self.builder.get_object('progressbar2').set_text('computing properties')
 
@@ -204,7 +204,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
 
             ################################################################# null network properties
 
-            print 't',t+1,T,'e',e+1,E[t],'null network'
+            print('t',t+1,T,'e',e+1,E[t],'null network')
 
             self.builder.get_object('progressbar2').set_text('evaluating null model')
 
@@ -230,9 +230,9 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
             while gtk.events_pending():
                 gtk.main_iteration()
 
-    print 's',s,S,'c',c,C
+    print('s',s,S,'c',c,C)
 
-    #print time.time()-temp
+    #print(time.time()-temp)
 
     #return 0
 
@@ -276,7 +276,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
 
     for l,label in enumerate(labels):
 
-        print 'label',l+1,len(labels)
+        print('label',l+1,len(labels))
 
         dn=[[] for t in range(T)]
         dd=[[] for t in range(T)]
@@ -379,7 +379,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
             while gtk.events_pending():
                 gtk.main_iteration()
 
-    print 's',s,S,'c',c,C
+    print('s',s,S,'c',c,C)
 
     self.builder.get_object('progressbar1').set_text('  ')
     self.builder.get_object('progressbar2').set_text('  ')
