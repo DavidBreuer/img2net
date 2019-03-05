@@ -99,7 +99,7 @@
     <property name="window_position">center</property>
     <property name="default_width">400</property>
     <property name="default_height">600</property>
-    <property name="icon">img2net_logo.png</property>
+    <property name="icon">logo.png</property>
     <property name="urgency_hint">True</property>
     <signal name="destroy" handler="on_window1_destroy" swapped="no"/>
     <child>
