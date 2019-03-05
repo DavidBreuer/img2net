@@ -42,10 +42,10 @@ def help_angle(vec):
     angle=180.0/np.pi*np.arccos(vec.dot([0,1])/np.sqrt(vec.dot(vec)))
     return angle
 
-def grid_pos2D(N,nz,pos):
+def grid_pos2D(N,nnz,pos):
     pos2D={}
     pos3D={}
-    for n in range(N/nz):
+    for n in range(N/nnz):
         pos2D[n]=(pos[n][0],pos[n][1])
     for n in range(N):
         pos3D[n]=(pos[n][0],pos[n][1])
@@ -57,44 +57,44 @@ def grid_grid(crd,lx,ly,lz,dx,dy,dz,pbx,pby,pbz,vax,vay,compute_convs,dir_posi,d
     edges=[]
     h=np.sqrt(3.0)/2.0
     dh=dy*h
-    nx=int(lx/dx)
-    ny=int(ly/dy)
-    nh=int(ly/dh)
-    nz=int(lz)
-    DX=0.5*(lx-(nx-1)*dx)
-    DY=0.5*(ly-(ny-1)*dy)
-    DH=0.5*(ly-(nh-1)*dh)
+    nnx=int(lx/dx)
+    nny=int(ly/dy)
+    nnh=int(ly/dh)
+    nnz=int(lz)
+    DX=0.5*(lx-(nnx-1)*dx)
+    DY=0.5*(ly-(nny-1)*dy)
+    DH=0.5*(ly-(nnh-1)*dh)
 
     if(crd=='rectangular'):
-        N=nx*ny*nz
+        N=nnx*nny*nnz
         n=0
-        for z in range(nz):
-            for y in range(ny):
-                for x in range(nx):
+        for z in range(nnz):
+            for y in range(nny):
+                for x in range(nnx):
                     pos[n]=(x*dx+DX,y*dy+DY,z*dz)
                     n+=1
         dh=dy
 
     elif(crd=='triangular'):
-        nx=nx-1+np.mod(nx,2)
-        nh=nh-np.mod(nh,2)
-        N=nx*nh*nz
+        nnx=nnx-1+np.mod(nnx,2)
+        nnh=nnh-np.mod(nnh,2)
+        N=nnx*nnh*nnz
         n=0
-        for z in range(nz):
-            for h in range(nh):
-                for x in range(nx):
+        for z in range(nnz):
+            for h in range(nnh):
+                for x in range(nnx):
                     pos[n]=((x+0.5*np.mod(h,2))*dx+0.5*DX,(h+0.5)*dh+DH,z*dz)
                     n+=1
-        ny=nh
+        nny=nnh
 
     elif(crd=='hexagonal'):
-        nx=3*int(nx/3)
-        nh=nh-np.mod(nh,2)
-        N=nx*nh*nz
+        nnx=3*int(nnx/3)
+        nnh=nnh-np.mod(nnh,2)
+        N=nnx*nnh*nnz
         n=0
-        for z in range(nz):
-            for h in range(nh):
-                for x in range(nx):
+        for z in range(nnz):
+            for h in range(nnh):
+                for x in range(nnx):
                     if(np.mod(h,2)==0 and np.mod(x+2,3)!=0):
                         pos[n]=((x+0.5+0.5*np.mod(h,2))*dx+0.5*DX,(h+0.5)*dh+DH,z*dz)
                         n+=1
@@ -102,18 +102,18 @@ def grid_grid(crd,lx,ly,lz,dx,dy,dz,pbx,pby,pbz,vax,vay,compute_convs,dir_posi,d
                         pos[n]=((x+0.5+0.5*np.mod(h,2))*dx+0.5*DX,(h+0.5)*dh+DH,z*dz)
                         n+=1
         N=n
-        ny=nh
+        nny=nnh
 
     for n in range(N):
         for m in range(n):
-            Dx=help_periodicdistance(nx*dx,pos[n][0],pos[m][0],pbx)
-            Dy=help_periodicdistance(ny*dh,pos[n][1],pos[m][1],pby)
-            Dz=help_periodicdistance(nz*dz,pos[n][2],pos[m][2],pbz)
+            Dx=help_periodicdistance(nnx*dx,pos[n][0],pos[m][0],pbx)
+            Dy=help_periodicdistance(nny*dh,pos[n][1],pos[m][1],pby)
+            Dz=help_periodicdistance(nnz*dz,pos[n][2],pos[m][2],pbz)
             if((Dx/dx)**2+(Dy/dy)**2+(Dz/dz)**2<1.1):
                 edges.append((n,m))
 
     E=len(edges)
-    pos2D,pos3D=grid_pos2D(N,nz,pos)
+    pos2D,pos3D=grid_pos2D(N,nnz,pos)
 
     convs=[]
     if(compute_convs):
@@ -130,7 +130,7 @@ def grid_grid(crd,lx,ly,lz,dx,dy,dz,pbx,pby,pbz,vax,vay,compute_convs,dir_posi,d
             if(E<1000):
                 convs.append(conv)
 
-    return N,nx,ny,nz,pos,E,edges,convs
+    return N,nnx,nny,nnz,pos,E,edges,convs
 
 
 
@@ -168,7 +168,7 @@ def grid_all(inp):
 
     return t,e,i,graph
 
-def graph_null(graphn,nx,ny,numo):
+def graph_null(graphn,nnx,nny,numo):
         graphg=graphn.copy()
 
         if(numo=='edges'):
@@ -182,29 +182,29 @@ def graph_null(graphn,nx,ny,numo):
 
         elif(numo=='lines'):
             E=graphg.number_of_edges()
-            idx=range(nx)
-            idy=range(ny)
+            idx=range(nnx)
+            idy=range(nny)
             random.shuffle(idx)
             random.shuffle(idy)
             links=graphg.edges(data=True)
             for e in range(E):
                 [n0,n1]=links[e][0:2]
-                [p0x,p0y]=[np.mod(n0,nx),n0/nx]
-                [p1x,p1y]=[np.mod(n1,nx),n1/nx]
+                [p0x,p0y]=[np.mod(n0,nnx),n0/nnx]
+                [p1x,p1y]=[np.mod(n1,nnx),n1/nnx]
                 if(p0x==p1x):
-                    graphg.edges(data=True)[e][2]['capa']=graphn[idx[p0x]+p0y*nx][idx[p1x]+p1y*nx]['capa']
-                    graphg.edges(data=True)[e][2]['lgth']=graphn[idx[p0x]+p0y*nx][idx[p1x]+p1y*nx]['lgth']
+                    graphg.edges(data=True)[e][2]['capa']=graphn[idx[p0x]+p0y*nnx][idx[p1x]+p1y*nnx]['capa']
+                    graphg.edges(data=True)[e][2]['lgth']=graphn[idx[p0x]+p0y*nnx][idx[p1x]+p1*nnx]['lgth']
                 if(p0y==p1y):
-                    graphg.edges(data=True)[e][2]['capa']=graphn[p0x+idy[p0y]*nx][p1x+idy[p1y]*nx]['capa']
-                    graphg.edges(data=True)[e][2]['lgth']=graphn[p0x+idy[p0y]*nx][p1x+idy[p1y]*nx]['lgth']
+                    graphg.edges(data=True)[e][2]['capa']=graphn[p0x+idy[p0y]*nnx][p1x+idy[p1y]*nnx]['capa']
+                    graphg.edges(data=True)[e][2]['lgth']=graphn[p0x+idy[p0y]*nnx][p1x+idy[p1y]*nnx]['lgth']
 
         elif(numo=='blocks'):
             Bx,By=3,4
             graphg=graphn.copy()
             E=graphg.number_of_edges()
             N=graphg.number_of_nodes()
-            bx=nx/Bx
-            by=ny/By
+            bx=nnx/Bx
+            by=nny/By
             B=Bx*By
             idb=range(B)
             random.shuffle(idb)
@@ -212,8 +212,8 @@ def graph_null(graphn,nx,ny,numo):
             left=set(range(E))
             for e in range(E):
                 [n0,n1]=links[e][0:2]
-                [p0x,p0y]=[np.mod(n0,nx),n0/nx]
-                [p1x,p1y]=[np.mod(n1,nx),n1/nx]
+                [p0x,p0y]=[np.mod(n0,nnx),n0/nnx]
+                [p1x,p1y]=[np.mod(n1,nnx),n1/nnx]
                 [c0x,c0y]=[p0x/bx,p0y/by]
                 [c1x,c1y]=[p1x/bx,p1y/by]
                 [c0,c1]=[c0x+c0y*Bx,c1x+c1y*Bx]
@@ -222,7 +222,7 @@ def graph_null(graphn,nx,ny,numo):
                     [cnewx,cnewy]=[np.mod(idb[c0],Bx),idb[c0]/Bx]
                     [d0x,d0y]=[p0x+(cnewx-c0x)*bx,p0y+(cnewy-c0y)*by]
                     [d1x,d1y]=[p1x+(cnewx-c1x)*bx,p1y+(cnewy-c1y)*by]
-                    [m0,m1]=[d0x+d0y*nx,d1x+d1y*nx]
+                    [m0,m1]=[d0x+d0y*nnx,d1x+d1y*nnx]
                     graphg.edges(data=True)[e][2]['capa']=graphn[m0][m1]['capa']
                     graphg.edges(data=True)[e][2]['lgth']=graphn[m0][m1]['lgth']
             left=list(left)
@@ -276,7 +276,7 @@ def graph_all(inp):
 
     ################################################# eigenvalues
     try:
-        spec=np.nansort(nx.laplacian_spectrum(G,weight='capa'))
+        spec=np.sort(nx.laplacian_spectrum(G,weight='capa'))
     except:
         warnings.warn('Computation of Laplacian spectrum failed, effective resistance and algebraic connectivity are not reliable.')
         spec=np.ones(N)
