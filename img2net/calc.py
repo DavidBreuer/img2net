@@ -45,12 +45,12 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
     pool=multiprocessing.Pool(processes=cores)
 
     dir_input+='/'
-    treatments=np.nansort(os.listdir(dir_input))
+    treatments=np.sort(os.listdir(dir_input))
     treatments=[t for t in treatments if not 'Output_' in t]
     T=len(treatments)
-    experiments=[np.nansort(os.listdir(dir_input+treatments[t])) for t in range(T)]
+    experiments=[np.sort(os.listdir(dir_input+treatments[t])) for t in range(T)]
     E=[len(experiments[t]) for t in range(T)]
-    images=[[np.nansort(os.listdir(dir_input+treatments[t]+'/'+experiments[t][e])) for e in range(E[t])] for t in range(T)]
+    images=[[np.sort(os.listdir(dir_input+treatments[t]+'/'+experiments[t][e])) for e in range(E[t])] for t in range(T)]
     I=[[len(images[t][e])/lz for e in range(E[t])] for t in range(T)]
 
     name='gridtype='+str(gridtype)+'_nullmodel='+str(nullmodel)+'_R='+str(R)+'_dx='+str(dx)+'_dy='+str(dy)+'_dz='+str(dz)+'_vax='+str(vax)+'_vay='+str(vay)+'_lz='+str(lz)+'_pbx='+str(pbx)+'_pby='+str(pby)+'_pbz='+str(pbz)+'/'
@@ -108,7 +108,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
                     if result == gtk.RESPONSE_OK:
                         return 0
 
-            N,nx,ny,nz,posi,L,edges,convs=img2net.help.grid_grid(gridtype,shi[1],shi[0],lz,dx,dy,dz,pbx,pby,pbz,vax,vay,0,'','')
+            N,nnx,nny,nnz,posi,L,edges,convs=img2net.help.grid_grid(gridtype,shi[1],shi[0],lz,dx,dy,dz,pbx,pby,pbz,vax,vay,0,'','')
 
             if(N==0 or L==0):
                 message = gtk.MessageDialog(parent=self.window,type=gtk.MESSAGE_INFO, buttons=gtk.BUTTONS_OK,message_format='Graph contains no nodes.')
@@ -147,7 +147,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
             lx,ly,lz=sh[1],sh[0],lz
             dir_posi=dir_output+'data_posi/data_posi_T='+str(t).zfill(4)+'_E='+str(e).zfill(4)
             dir_conv=dir_output+'data_conv/data_conv_T='+str(t).zfill(4)+'_E='+str(e).zfill(4)
-            N,nx,ny,nz,posi,L,edges,convs=img2net.help.grid_grid(gridtype,lx,ly,lz,dx,dy,dz,pbx,pby,pbz,vax,vay,1,dir_posi,dir_conv)
+            N,nnx,nny,nnz,posi,L,edges,convs=img2net.help.grid_grid(gridtype,lx,ly,lz,dx,dy,dz,pbx,pby,pbz,vax,vay,1,dir_posi,dir_conv)
 
             self.builder.get_object('progressbar2').set_fraction(s/S)
             s+=1
@@ -211,7 +211,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
             jobs=[]
             for i in range(I[t][e]):
                 for r in range(R):
-                    inp=[t,e,i,r,img2net.help.graph_null(graphn[i],nx,ny,nullmodel),posi]
+                    inp=[t,e,i,r,img2net.help.graph_null(graphn[i],nnx,nny,nullmodel),posi]
                     # TODO uncomment for multiprocessing
                     #jobs.append(pool.apply_async(img2net.help.graph_all,args=(inp,)))
             #for job in jobs:
