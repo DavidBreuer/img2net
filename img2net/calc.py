@@ -15,7 +15,7 @@ import img2net.help
 
 ##################################################################### img2net
 
-def img2net_calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay,cores):
+def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay,cores):
 
 #    dir_input='/media/breuer/Data/2014_img2net_TestData/3D'
 #    dir_input='C:/Users/David/Dropbox/2013_CytoQuant/img2net_TestData/3D'
