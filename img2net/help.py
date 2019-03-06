@@ -7,6 +7,7 @@ import random
 import scipy as sp
 import scipy.ndimage
 import scipy.stats
+import warnings
 
 ##################################################################### functions
 

@@ -143,7 +143,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
 
             dir_te=dir_input+treatments[t]+'/'+experiments[t][e]+'/'
             ims=sp.ndimage.imread(dir_te+images[t][e][0])
-            sh=np.shape(ims)
+            sh=np.shape(ims)[0:2]
             lx,ly,lz=sh[1],sh[0],lz
             dir_posi=dir_output+'data_posi/data_posi_T='+str(t).zfill(4)+'_E='+str(e).zfill(4)
             dir_conv=dir_output+'data_conv/data_conv_T='+str(t).zfill(4)+'_E='+str(e).zfill(4)
@@ -343,7 +343,7 @@ def calc(self,gtk,dir_input,gridtype,nullmodel,R,lz,dx,dy,dz,pbx,pby,pbz,vax,vay
         for e in range(E[t]):
             dir_te=dir_input+treatments[t]+'/'+experiments[t][e]+'/'
             ims=sp.ndimage.imread(dir_te+images[t][e][lz-1])
-            ly,lx=np.shape(ims)
+            ly,lx=np.shape(ims)[0:2]
             name=dir_output+'data_grph/data_grph_T='+str(t).zfill(4)+'_E='+str(e).zfill(4)+'_I='+str(0).zfill(4)+'.npy'
             gn=nx.from_edgelist(np.load(name))
             N=gn.number_of_nodes()
