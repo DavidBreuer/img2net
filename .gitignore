@@ -1,3 +1,6 @@
+# Custom img2net output
+**/Output_*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
