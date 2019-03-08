@@ -163,7 +163,7 @@ def grid_all(inp):
     for z in range(len(files)):
         im=1.0*sp.ndimage.imread(directory+files[z])
         if(len(np.shape(im))>2):
-            im=im[:,:,0]
+            im=np.nanmean(im,axis=-1)#im[:,:,0]
         ims.append(im)
     graph=grid_graph(ims,L,edges,dir_pos,dir_convs,dz)
 
